@@ -3,6 +3,13 @@
 let playerScore = 0
 let compScore = 0 
 
+const rockButton = document.querySelector('.rock')
+const paperButton = document.querySelector('.paper')
+const scissorsButton = document.querySelector('.scissors')
+const outcomeDiv = document.querySelector('.outcome')
+const playerScoreSpan = document.querySelector('.player-score')
+const compScoreSpan = document.querySelector('.comp-score')
+
 function getComputerChoice () {
     const choices = ['rock', 'paper', 'scissors'];
     return choices[Math.floor(Math.random() * choices.length)]
@@ -18,54 +25,117 @@ function playRound (playerSelection, computerSelection) {
     //     return `You tied! You both picked ${playerSelection}!`
     // }
     if (playerSelection === 'rock' && computerSelection === 'rock') {
-        return 'You tied! You both picked rock!'
+        const p = document.createElement('p')
+        p.innerText = `You tied! You both picked ${playerSelection}!`
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'rock' && computerSelection === 'paper') {
         compScore++
-        return 'You lose! Paper beats rock!'
+        const p = document.createElement('p')
+        p.innerText = 'You lose! Paper beats rock!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
         playerScore++
-        return 'You win! Rock beats scissors!'
+        const p = document.createElement('p')
+        p.innerText = 'You win! Rock beats scissors!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'paper' && computerSelection === 'paper]') {
-        return 'You tied! You both picked paper!'
+        const p = document.createElement('p')
+        p.innerText = 'You tied! You both picked paper!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'paper' && computerSelection === 'rock') {
         playerScore++
-        return 'You win! Paper beats rock!'
+        const p = document.createElement('p')
+        p.innerText = 'You win! Paper beats rock!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'paper' && computerSelection === 'scissors') {
         compScore++
-        return 'You lose! Scissors beats paper!'
+        const p = document.createElement('p')
+        p.innerText = 'You lose! Scissors beats paper!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'scissors' && computerSelection === 'scissors') {
-        return 'You tied! You both picked scissors!'
+        const p = document.createElement('p')
+        p.innerText = 'You tied! You both picked scissors!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'scissors' && computerSelection === 'rock') {
         compScore++
-        return 'You lose! Rock beats scissors!'
+        const p = document.createElement('p')
+        p.innerText = 'You lose! Rock beats scissors!'
+        outcomeDiv.appendChild(p)
     } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
         playerScore++
-        return 'You win! Scissors beats paper!'
+        const p = document.createElement('p')
+        p.innerText = 'You win! Scissors beats paper!'
+        outcomeDiv.appendChild(p)
     }
 }
 
-const playerSelection = "rock"
+const checkForWinner = (playerScore, compScore) => {
+    if (playerScore === 5) {
+        const h2 = document.createElement('h2')
+        h2.classList.add('player-won')
+        h2.innerText = `You won ${playerScore} to ${compScore} great job beating the computer!`
+        outcomeDiv.append(h2)
+    } 
+    
+    else if (compScore === 5) {
+        const h2 = document.createElement('h2')
+        h2.classList.add('computer-won')
+        h2.innerText = `You lost ${playerScore} to ${compScore} try again!`
+        outcomeDiv.append(h2)
+    }
+}
+
+const updateScores = (playerScore, compScore) => {
+    playerScoreSpan.innerText = `Player Score: ${playerScore}`
+    compScoreSpan.innerText = `Computer Score: ${compScore}`
+}
+
+rockButton.addEventListener('click', () => {
+    const computerSelection = getComputerChoice()
+    const playerSelection = 'rock'
+    playRound(playerSelection, computerSelection)
+    updateScores(playerScore, compScore)
+    checkForWinner(playerScore, compScore)
+})
+
+paperButton.addEventListener('click', () => {
+    const computerSelection = getComputerChoice()
+    const playerSelection = 'paper'
+    playRound(playerSelection, computerSelection)
+    updateScores(playerScore, compScore)
+    checkForWinner(playerScore, compScore)
+})
+
+scissorsButton.addEventListener('click', () => {
+    const computerSelection = getComputerChoice()
+    const playerSelection = 'scissors'
+    playRound(playerSelection, computerSelection)
+    updateScores(playerScore, compScore)
+    checkForWinner(playerScore, compScore)
+})
+
+// const playerSelection = "rock"
 
 // Write a NEW function called game(). 
 // Call the playRound function inside of this one to play a 5 round game that keeps score and reports a winner or loser at the end.
 
-function game () {
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt('Choose what to throw', 'rock, paper or scissors?').toLowerCase()
-        const computerSelection = getComputerChoice()
-        playRound(playerSelection, computerSelection)
-     }
+// function game () {
+    // for (let i = 0; i < 5; i++) {
+    //     const playerSelection = prompt('Choose what to throw', 'rock, paper or scissors?').toLowerCase()
+    //     const computerSelection = getComputerChoice()
+    //     playRound(playerSelection, computerSelection)
+    //  }
 
-    if (playerScore > compScore) {
-        return 'You beat the computer!'
-    } else if (playerScore < compScore) {
-        return 'You lost to the computer!'
-    } else {
-        return 'You tied with the computer! Challenge again!'
-    }
-}
+//     if (playerScore > compScore) {
+//         return 'You beat the computer!'
+//     } else if (playerScore < compScore) {
+//         return 'You lost to the computer!'
+//     } else {
+//         return 'You tied with the computer! Challenge again!'
+//     }
+// }
 
-console.log(game())
+// console.log(game())
 
 
 
